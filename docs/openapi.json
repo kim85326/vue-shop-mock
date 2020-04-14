@@ -1,0 +1,680 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Vue Shop API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "/api/v1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "users",
+      "description": "用戶相關 API"
+    },
+    {
+      "name": "roles",
+      "description": "角色相關 API"
+    },
+    {
+      "name": "permissions",
+      "description": "權限相關 API"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "summary": "取得用戶列表",
+        "tags": [
+          "users"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/keyword"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "headers": {
+              "X-Page": {
+                "$ref": "#/components/headers/XPage"
+              },
+              "X-Page-Size": {
+                "$ref": "#/components/headers/XPageSize"
+              },
+              "X-Total": {
+                "$ref": "#/components/headers/XTotal"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Users"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "新增用戶",
+        "tags": [
+          "users"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/addUser"
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/id"
+        }
+      ],
+      "get": {
+        "summary": "取得用戶",
+        "tags": [
+          "users"
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "編輯用戶",
+        "tags": [
+          "users"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/updateUser"
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "刪除用戶",
+        "tags": [
+          "users"
+        ],
+        "responses": {
+          "204": {
+            "description": "成功"
+          }
+        }
+      }
+    },
+    "/users/{id}/enabled": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/id"
+        }
+      ],
+      "put": {
+        "summary": "啟用用戶",
+        "tags": [
+          "users"
+        ],
+        "responses": {
+          "204": {
+            "description": "成功"
+          }
+        }
+      },
+      "delete": {
+        "summary": "停用用戶",
+        "tags": [
+          "users"
+        ],
+        "responses": {
+          "204": {
+            "description": "成功"
+          }
+        }
+      }
+    },
+    "/roles": {
+      "get": {
+        "summary": "取得角色列表",
+        "tags": [
+          "roles"
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Roles"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "新增角色",
+        "tags": [
+          "roles"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/addRole"
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/roles/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/id"
+        }
+      ],
+      "get": {
+        "summary": "取得角色",
+        "tags": [
+          "roles"
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "編輯角色",
+        "tags": [
+          "roles"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/updateRole"
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "刪除角色",
+        "tags": [
+          "roles"
+        ],
+        "responses": {
+          "204": {
+            "description": "成功"
+          }
+        }
+      }
+    },
+    "/permissions": {
+      "get": {
+        "summary": "取得權限列表",
+        "tags": [
+          "permissions"
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Permissions"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "編號",
+            "type": "integer"
+          },
+          "username": {
+            "description": "帳號",
+            "type": "string"
+          },
+          "name": {
+            "description": "姓名",
+            "type": "string"
+          },
+          "email": {
+            "description": "信箱",
+            "type": "string"
+          },
+          "isEnabled": {
+            "description": "是否啟用",
+            "type": "boolean"
+          },
+          "remark": {
+            "description": "備註",
+            "type": "string"
+          },
+          "createdTime": {
+            "description": "建立時間",
+            "type": "string",
+            "format": "date-time"
+          },
+          "latestLoginTime": {
+            "description": "最後登入時間",
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "example": {
+          "id": 1,
+          "username": "hello123",
+          "name": "李正赫",
+          "email": "hello123@gmail.com",
+          "isEnabled": true,
+          "remark": "朝鮮人民軍總政治局局長的小兒子，現任民警大隊第五中隊大尉中隊長",
+          "createdTime": "2018-09-29T13:55:30",
+          "latestLoginTime": "2018-09-29T13:55:39"
+        }
+      },
+      "Users": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/User"
+        },
+        "example": [
+          {
+            "id": 1,
+            "username": "hello123",
+            "name": "李正赫",
+            "email": "hello123@gmail.com",
+            "isEnabled": true,
+            "remark": "朝鮮人民軍總政治局局長的小兒子，現任民警大隊第五中隊大尉中隊長",
+            "createdTime": "2018-09-29T13:55:30",
+            "latestLoginTime": "2018-09-29T13:55:39"
+          },
+          {
+            "id": 2,
+            "username": "elaine123",
+            "name": "尹世理",
+            "email": "elaine@gmail.com",
+            "isEnabled": true,
+            "remark": "韓國女王集團會長的小女兒",
+            "createdTime": "2019-10-06T15:02:51",
+            "latestLoginTime": "2019-10-06T15:53:51"
+          },
+          {
+            "id": 3,
+            "username": "hi123",
+            "name": "徐丹",
+            "email": "h123@gmail.com",
+            "isEnabled": false,
+            "remark": "",
+            "createdTime": "2018-09-29T13:55:30",
+            "latestLoginTime": null
+          },
+          {
+            "id": 50,
+            "username": "ssssssskkkkkkkkk123",
+            "name": "阿爾貝托",
+            "email": "dddddeeeeeeeeeegggggg123@gmail.com",
+            "isEnabled": true,
+            "remark": "英籍企業家，打算與世理結婚",
+            "createdTime": "2019-04-20T12:45:16",
+            "latestLoginTime": null
+          }
+        ]
+      },
+      "Role": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "編號",
+            "type": "integer"
+          },
+          "name": {
+            "description": "名稱",
+            "type": "string"
+          },
+          "description": {
+            "description": "描述",
+            "type": "string"
+          },
+          "createdTime": {
+            "description": "建立時間",
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "example": {
+          "id": 1,
+          "name": "超級管理員",
+          "description": "什麼權限都有ㄚ",
+          "createdTime": "2018-09-29T13:55:30"
+        }
+      },
+      "Roles": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Role"
+        },
+        "example": [
+          {
+            "id": 1,
+            "name": "超級管理員",
+            "description": "什麼權限都有ㄚ",
+            "createdTime": "2018-09-29T13:55:30"
+          },
+          {
+            "id": 2,
+            "name": "商品小摟摟",
+            "description": "只能管商品",
+            "createdTime": "2018-10-10T03:02:01"
+          },
+          {
+            "id": 5,
+            "name": "訂單負責人",
+            "description": "",
+            "createdTime": "2018-10-12T01:02:03"
+          }
+        ]
+      },
+      "Permissions": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "description": "名稱",
+              "type": "string"
+            },
+            "description": {
+              "description": "描述",
+              "type": "string"
+            }
+          }
+        },
+        "example": [
+          {
+            "name": "user-read",
+            "description": "檢視用戶"
+          },
+          {
+            "name": "user-add",
+            "description": "新增用戶"
+          },
+          {
+            "name": "user-update",
+            "description": "編輯用戶"
+          }
+        ]
+      }
+    },
+    "parameters": {
+      "id": {
+        "in": "path",
+        "name": "id",
+        "schema": {
+          "type": "integer"
+        },
+        "required": true,
+        "description": "編號",
+        "example": 1
+      },
+      "page": {
+        "in": "query",
+        "name": "page",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "頁數",
+        "example": 1
+      },
+      "pageSize": {
+        "in": "query",
+        "name": "pageSize",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "每頁筆數",
+        "example": 20
+      },
+      "keyword": {
+        "in": "query",
+        "name": "keyword",
+        "schema": {
+          "type": "string"
+        },
+        "description": "關鍵字",
+        "example": "哈囉"
+      }
+    },
+    "headers": {
+      "XPage": {
+        "schema": {
+          "type": "integer"
+        },
+        "description": "頁數",
+        "example": 1
+      },
+      "XPageSize": {
+        "schema": {
+          "type": "integer"
+        },
+        "description": "每頁筆數",
+        "example": 20
+      },
+      "XTotal": {
+        "schema": {
+          "type": "integer"
+        },
+        "description": "總筆數",
+        "example": 26
+      }
+    },
+    "requestBodies": {
+      "addUser": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "username": {
+                  "description": "帳號",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "姓名",
+                  "type": "string"
+                },
+                "email": {
+                  "description": "信箱",
+                  "type": "string"
+                },
+                "password": {
+                  "description": "密碼",
+                  "type": "string"
+                },
+                "isEnabled": {
+                  "description": "是否啟用",
+                  "type": "boolean"
+                },
+                "remark": {
+                  "description": "備註",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "username",
+                "name",
+                "email",
+                "password",
+                "isEnabled",
+                "remark"
+              ],
+              "example": {
+                "username": "hello123",
+                "name": "李正赫",
+                "email": "hello123@gmail.com",
+                "password": "hahaha888",
+                "isEnabled": false,
+                "remark": "朝鮮人民軍總政治局局長的小兒子，現任民警大隊第五中隊大尉中隊長"
+              }
+            }
+          }
+        }
+      },
+      "updateUser": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "username": {
+                  "description": "帳號",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "姓名",
+                  "type": "string"
+                },
+                "email": {
+                  "description": "信箱",
+                  "type": "string"
+                },
+                "password": {
+                  "description": "密碼",
+                  "type": "string"
+                },
+                "remark": {
+                  "description": "備註",
+                  "type": "string"
+                }
+              },
+              "example": {
+                "username": "hello123",
+                "name": "李正赫",
+                "email": "hello123@gmail.com",
+                "password": "hahaha888",
+                "remark": "朝鮮人民軍總政治局局長的小兒子，現任民警大隊第五中隊大尉中隊長"
+              }
+            }
+          }
+        }
+      },
+      "addRole": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "name": {
+                  "description": "姓名",
+                  "type": "string"
+                },
+                "description": {
+                  "description": "描述",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "description"
+              ],
+              "example": {
+                "name": "媽媽",
+                "description": "下來吃飯"
+              }
+            }
+          }
+        }
+      },
+      "updateRole": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "name": {
+                  "description": "姓名",
+                  "type": "string"
+                },
+                "description": {
+                  "description": "描述",
+                  "type": "string"
+                }
+              },
+              "example": {
+                "name": "媽媽",
+                "description": "快點下來吃飯"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

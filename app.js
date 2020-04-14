@@ -1,43 +1,65 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const cors = require("cors");
 
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
+const { loadCurrentUserMiddleware, authMiddleware } = require("./middlewares/authMiddleware");
 
-var app = express();
+const docsRouter = require("./routes/docs");
+const indexRouter = require("./routes/index");
+const authRouter = require("./routes/auth");
+const usersRouter = require("./routes/users");
+const rolesRouter = require("./routes/roles");
+const permissionsRouter = require("./routes/permissions");
+
+const app = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
 
 app.use(logger("dev"));
+
+// body parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// static files
 app.use(express.static(path.join(__dirname, "public")));
 
-const allowCrossDomain = function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "*");
-  res.header("Access-Control-Allow-Headers", "*");
-  res.header("Access-Control-Expose-Headers", "*");
-  next();
-};
-app.use(allowCrossDomain);
+// cors
+app.use(
+  cors({
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+    allowedHeaders: "*",
+    exposedHeaders: "*",
+  })
+);
 
+// load current user
+app.use(loadCurrentUserMiddleware);
+
+// routers
+app.use("/docs", docsRouter);
 app.use("/", indexRouter);
-app.use("/api/v1/users", usersRouter);
+app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/users", authMiddleware, usersRouter);
+app.use("/api/v1/roles", authMiddleware, rolesRouter);
+app.use("/api/v1/permissions", authMiddleware, permissionsRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
+  console.log(err);
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
