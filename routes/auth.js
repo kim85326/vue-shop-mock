@@ -41,7 +41,7 @@ router.post("/", function (req, res, next) {
     const token = jwt.sign({ username: user.username }, tokenSecret, {
       expiresIn: "1h",
     });
-    return res.json({ token });
+    return res.status(200).json({ token });
   } catch (error) {
     console.log(error);
     return res.status(403).send({

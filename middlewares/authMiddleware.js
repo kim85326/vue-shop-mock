@@ -3,8 +3,22 @@ const jwt = require("jsonwebtoken");
 const { tokenSecret } = require("../config");
 const userModel = require("../models/userModel");
 
-exports.loadCurrentUserMiddleware = function (req, res, next) {
+const parseToken = (req) => {
+  const bearerHeader = req.headers.authorization;
+  if (bearerHeader) {
+    return bearerHeader.split(" ")[1];
+  }
+
   const token = req.headers["x-access-token"];
+  if (token) {
+    return token;
+  }
+
+  return undefined;
+};
+
+exports.loadCurrentUserMiddleware = function (req, res, next) {
+  const token = parseToken(req);
 
   if (token) {
     try {
@@ -12,8 +26,7 @@ exports.loadCurrentUserMiddleware = function (req, res, next) {
       const existedUser = userModel.getByUsername(username);
       req.currentUser = existedUser;
     } catch (error) {
-      console.log(error);
-      return res.status(403).send({
+      return res.status(401).send({
         error_code: 1004,
         error_message: "無效的 token",
       });
@@ -25,7 +38,7 @@ exports.loadCurrentUserMiddleware = function (req, res, next) {
 
 exports.authMiddleware = function (req, res, next) {
   if (!req.currentUser) {
-    return res.status(403).send({
+    return res.status(401).send({
       error_code: 1005,
       error_message: "用戶未登入",
     });

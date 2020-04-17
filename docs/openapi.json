@@ -11,6 +11,10 @@
   ],
   "tags": [
     {
+      "name": "auth",
+      "description": "驗證相關 API"
+    },
+    {
       "name": "users",
       "description": "用戶相關 API"
     },
@@ -24,11 +28,81 @@
     }
   ],
   "paths": {
+    "/auth": {
+      "post": {
+        "summary": "登入",
+        "tags": ["auth"],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Login"
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Login"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/InvalidInput"
+          }
+        }
+      },
+      "delete": {
+        "summary": "登出",
+        "tags": ["auth"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "成功"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/auth/current-user": {
+      "get": {
+        "summary": "取得當前用戶",
+        "tags": ["auth"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
     "/users": {
       "get": {
         "summary": "取得用戶列表",
-        "tags": [
-          "users"
+        "tags": ["users"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "parameters": [
           {
@@ -62,16 +136,25 @@
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/PermissionDeny"
           }
         }
       },
       "post": {
         "summary": "新增用戶",
-        "tags": [
-          "users"
+        "tags": ["users"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "requestBody": {
-          "$ref": "#/components/requestBodies/addUser"
+          "$ref": "#/components/requestBodies/AddUser"
         },
         "responses": {
           "201": {
@@ -83,6 +166,15 @@
                 }
               }
             }
+          },
+          "400": {
+            "$ref": "#/components/responses/InvalidInput"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/PermissionDeny"
           }
         }
       }
@@ -95,8 +187,11 @@
       ],
       "get": {
         "summary": "取得用戶",
-        "tags": [
-          "users"
+        "tags": ["users"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "responses": {
           "200": {
@@ -108,16 +203,25 @@
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/PermissionDeny"
           }
         }
       },
       "patch": {
         "summary": "編輯用戶",
-        "tags": [
-          "users"
+        "tags": ["users"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "requestBody": {
-          "$ref": "#/components/requestBodies/updateUser"
+          "$ref": "#/components/requestBodies/UpdateUser"
         },
         "responses": {
           "200": {
@@ -129,17 +233,35 @@
                 }
               }
             }
+          },
+          "400": {
+            "$ref": "#/components/responses/InvalidInput"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/PermissionDeny"
           }
         }
       },
       "delete": {
         "summary": "刪除用戶",
-        "tags": [
-          "users"
+        "tags": ["users"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "responses": {
           "204": {
             "description": "成功"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/PermissionDeny"
           }
         }
       }
@@ -152,23 +274,41 @@
       ],
       "put": {
         "summary": "啟用用戶",
-        "tags": [
-          "users"
+        "tags": ["users"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "responses": {
           "204": {
             "description": "成功"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/PermissionDeny"
           }
         }
       },
       "delete": {
         "summary": "停用用戶",
-        "tags": [
-          "users"
+        "tags": ["users"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "responses": {
           "204": {
             "description": "成功"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/PermissionDeny"
           }
         }
       }
@@ -176,8 +316,11 @@
     "/roles": {
       "get": {
         "summary": "取得角色列表",
-        "tags": [
-          "roles"
+        "tags": ["roles"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "responses": {
           "200": {
@@ -189,16 +332,25 @@
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/PermissionDeny"
           }
         }
       },
       "post": {
         "summary": "新增角色",
-        "tags": [
-          "roles"
+        "tags": ["roles"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "requestBody": {
-          "$ref": "#/components/requestBodies/addRole"
+          "$ref": "#/components/requestBodies/AddRole"
         },
         "responses": {
           "201": {
@@ -210,6 +362,15 @@
                 }
               }
             }
+          },
+          "400": {
+            "$ref": "#/components/responses/InvalidInput"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/PermissionDeny"
           }
         }
       }
@@ -222,8 +383,11 @@
       ],
       "get": {
         "summary": "取得角色",
-        "tags": [
-          "roles"
+        "tags": ["roles"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "responses": {
           "200": {
@@ -235,16 +399,25 @@
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/PermissionDeny"
           }
         }
       },
       "patch": {
         "summary": "編輯角色",
-        "tags": [
-          "roles"
+        "tags": ["roles"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "requestBody": {
-          "$ref": "#/components/requestBodies/updateRole"
+          "$ref": "#/components/requestBodies/UpdateRole"
         },
         "responses": {
           "200": {
@@ -256,17 +429,35 @@
                 }
               }
             }
+          },
+          "400": {
+            "$ref": "#/components/responses/InvalidInput"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/PermissionDeny"
           }
         }
       },
       "delete": {
         "summary": "刪除角色",
-        "tags": [
-          "roles"
+        "tags": ["roles"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "responses": {
           "204": {
             "description": "成功"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/PermissionDeny"
           }
         }
       }
@@ -274,8 +465,11 @@
     "/permissions": {
       "get": {
         "summary": "取得權限列表",
-        "tags": [
-          "permissions"
+        "tags": ["permissions"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "responses": {
           "200": {
@@ -287,6 +481,12 @@
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/PermissionDeny"
           }
         }
       }
@@ -294,6 +494,30 @@
   },
   "components": {
     "schemas": {
+      "Error": {
+        "properties": {
+          "error_code": {
+            "description": "錯誤代碼",
+            "type": "integer"
+          },
+          "error_message": {
+            "description": "錯誤訊息",
+            "type": "string"
+          }
+        }
+      },
+      "Login": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "description": "token",
+            "type": "string"
+          }
+        },
+        "example": {
+          "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhlbGxvMTIzIiwiaWF0IjoxNTg3MTA4NTE5LCJleHAiOjE1ODcxMTIxMTl9.T3by9jdNIuHYi_HXgh1aUvGX2YGi_3rx6KtTqfr2wuE"
+        }
+      },
       "User": {
         "type": "object",
         "properties": {
@@ -540,7 +764,30 @@
       }
     },
     "requestBodies": {
-      "addUser": {
+      "Login": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "username": {
+                  "description": "帳號",
+                  "type": "string"
+                },
+                "password": {
+                  "description": "密碼",
+                  "type": "string"
+                }
+              },
+              "required": ["username", "password"],
+              "example": {
+                "username": "hello123",
+                "password": "hahaha888"
+              }
+            }
+          }
+        }
+      },
+      "AddUser": {
         "content": {
           "application/json": {
             "schema": {
@@ -570,14 +817,7 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "username",
-                "name",
-                "email",
-                "password",
-                "isEnabled",
-                "remark"
-              ],
+              "required": ["username", "name", "email", "password", "isEnabled", "remark"],
               "example": {
                 "username": "hello123",
                 "name": "李正赫",
@@ -590,7 +830,7 @@
           }
         }
       },
-      "updateUser": {
+      "UpdateUser": {
         "content": {
           "application/json": {
             "schema": {
@@ -627,7 +867,7 @@
           }
         }
       },
-      "addRole": {
+      "AddRole": {
         "content": {
           "application/json": {
             "schema": {
@@ -641,10 +881,7 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "name",
-                "description"
-              ],
+              "required": ["name", "description"],
               "example": {
                 "name": "媽媽",
                 "description": "下來吃飯"
@@ -653,7 +890,7 @@
           }
         }
       },
-      "updateRole": {
+      "UpdateRole": {
         "content": {
           "application/json": {
             "schema": {
@@ -674,6 +911,80 @@
             }
           }
         }
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "尚未登入",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "Unauthorized": {
+                "$ref": "#/components/examples/UnauthorizedError"
+              }
+            }
+          }
+        }
+      },
+      "InvalidInput": {
+        "description": "無效參數",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "InvalidInputError": {
+                "$ref": "#/components/examples/InvalidInputError"
+              }
+            }
+          }
+        }
+      },
+      "PermissionDeny": {
+        "description": "沒有權限",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "InvalidInputError": {
+                "$ref": "#/components/examples/PermissionDenyError"
+              }
+            }
+          }
+        }
+      }
+    },
+    "examples": {
+      "UnauthorizedError": {
+        "value": {
+          "error_code": "1001",
+          "error_message": "尚未登入"
+        }
+      },
+      "InvalidInputError": {
+        "value": {
+          "error_code": "1002",
+          "error_message": "無效參數"
+        }
+      },
+      "PermissionDenyError": {
+        "value": {
+          "error_code": "1003",
+          "error_message": "沒有權限"
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }
