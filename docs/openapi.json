@@ -564,8 +564,8 @@
           "email": "hello123@gmail.com",
           "isEnabled": true,
           "remark": "朝鮮人民軍總政治局局長的小兒子，現任民警大隊第五中隊大尉中隊長",
-          "createdTime": "2018-09-29T13:55:30",
-          "latestLoginTime": "2018-09-29T13:55:39"
+          "createdTime": "2018-09-29T13:55:30+08:00",
+          "latestLoginTime": "2018-09-29T13:55:39+08:00"
         }
       },
       "Users": {
@@ -581,8 +581,8 @@
             "email": "hello123@gmail.com",
             "isEnabled": true,
             "remark": "朝鮮人民軍總政治局局長的小兒子，現任民警大隊第五中隊大尉中隊長",
-            "createdTime": "2018-09-29T13:55:30",
-            "latestLoginTime": "2018-09-29T13:55:39"
+            "createdTime": "2018-09-29T13:55:30+08:00",
+            "latestLoginTime": "2018-09-29T13:55:39+08:00"
           },
           {
             "id": 2,
@@ -591,8 +591,8 @@
             "email": "elaine@gmail.com",
             "isEnabled": true,
             "remark": "韓國女王集團會長的小女兒",
-            "createdTime": "2019-10-06T15:02:51",
-            "latestLoginTime": "2019-10-06T15:53:51"
+            "createdTime": "2019-10-06T15:02:51+08:00",
+            "latestLoginTime": "2019-10-06T15:53:51+08:00"
           },
           {
             "id": 3,
@@ -601,7 +601,7 @@
             "email": "h123@gmail.com",
             "isEnabled": false,
             "remark": "",
-            "createdTime": "2018-09-29T13:55:30",
+            "createdTime": "2018-09-29T13:55:30+08:00",
             "latestLoginTime": null
           },
           {
@@ -611,7 +611,7 @@
             "email": "dddddeeeeeeeeeegggggg123@gmail.com",
             "isEnabled": true,
             "remark": "英籍企業家，打算與世理結婚",
-            "createdTime": "2019-04-20T12:45:16",
+            "createdTime": "2019-04-20T12:45:16+08:00",
             "latestLoginTime": null
           }
         ]
@@ -641,7 +641,7 @@
           "id": 1,
           "name": "超級管理員",
           "description": "什麼權限都有ㄚ",
-          "createdTime": "2018-09-29T13:55:30"
+          "createdTime": "2018-09-29T13:55:30+08:00"
         }
       },
       "Roles": {
@@ -654,19 +654,19 @@
             "id": 1,
             "name": "超級管理員",
             "description": "什麼權限都有ㄚ",
-            "createdTime": "2018-09-29T13:55:30"
+            "createdTime": "2018-09-29T13:55:30+08:00"
           },
           {
             "id": 2,
             "name": "商品小摟摟",
             "description": "只能管商品",
-            "createdTime": "2018-10-10T03:02:01"
+            "createdTime": "2018-10-10T03:02:01+08:00"
           },
           {
             "id": 5,
             "name": "訂單負責人",
             "description": "",
-            "createdTime": "2018-10-12T01:02:03"
+            "createdTime": "2018-10-12T01:02:03+08:00"
           }
         ]
       },

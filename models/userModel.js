@@ -1,3 +1,7 @@
+const moment = require("moment");
+
+moment.locale("zh-tw");
+
 const userModel = {
   users: [
     {
@@ -9,8 +13,8 @@ const userModel = {
       email: "hello123@gmail.com",
       isEnabled: true,
       remark: "朝鮮人民軍總政治局局長的小兒子，現任民警大隊第五中隊大尉中隊長",
-      createdTime: "2018-09-29T13:55:30",
-      latestLoginTime: "2018-09-29T13:55:39",
+      createdTime: moment("2018-09-29T13:55:30").format(),
+      latestLoginTime: moment("2018-09-29T13:55:39").format(),
     },
     {
       id: 2,
@@ -21,8 +25,8 @@ const userModel = {
       email: "elaine@gmail.com",
       isEnabled: true,
       remark: "韓國女王集團會長的小女兒",
-      createdTime: "2019-10-06T15:02:51",
-      latestLoginTime: "2019-10-06T15:53:51",
+      createdTime: moment("2019-10-06T15:02:51").format(),
+      latestLoginTime: moment("2019-10-06T15:53:51").format(),
     },
     {
       id: 3,
@@ -33,7 +37,7 @@ const userModel = {
       email: "h123@gmail.com",
       isEnabled: false,
       remark: "",
-      createdTime: "2018-09-29T13:55:30",
+      createdTime: moment("2018-09-29T13:55:30").format(),
       latestLoginTime: null,
     },
     {
@@ -45,7 +49,7 @@ const userModel = {
       email: "dddddeeeeeeeeeegggggg123@gmail.com",
       isEnabled: true,
       remark: "英籍企業家，打算與世理結婚",
-      createdTime: "2019-04-20T12:45:16",
+      createdTime: moment("2019-04-20T12:45:16").format(),
       latestLoginTime: null,
     },
   ],
