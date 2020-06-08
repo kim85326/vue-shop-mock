@@ -43,7 +43,7 @@ router.get("/", async function (req, res, next) {
  * GET: /api/v1/roles/:id
  */
 router.get("/:id", async function (req, res, next) {
-  const existedRole = getRoleById(Number(req.params.id));
+  const existedRole = roleModel.getById(Number(req.params.id));
 
   if (!existedRole) {
     res.status(404).send();
