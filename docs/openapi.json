@@ -462,6 +462,35 @@
         }
       }
     },
+    "/roles/summaries": {
+      "get": {
+        "summary": "取得角色摘要",
+        "tags": ["roles"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleSummaries"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/PermissionDeny"
+          }
+        }
+      }
+    },
     "/permissions": {
       "get": {
         "summary": "取得權限列表",
@@ -845,6 +874,43 @@
             "name": "訂單負責人",
             "description": "",
             "createdTime": "2018-10-12T01:02:03+08:00"
+          }
+        ]
+      },
+      "RoleSummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "編號",
+            "type": "integer"
+          },
+          "name": {
+            "description": "名稱",
+            "type": "string"
+          }
+        },
+        "example": {
+          "id": 1,
+          "name": "超級管理員"
+        }
+      },
+      "RoleSummaries": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/RoleSummary"
+        },
+        "example": [
+          {
+            "id": 1,
+            "name": "超級管理員"
+          },
+          {
+            "id": 2,
+            "name": "商品小摟摟"
+          },
+          {
+            "id": 5,
+            "name": "訂單負責人"
           }
         ]
       },
