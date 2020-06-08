@@ -490,6 +490,184 @@
           }
         }
       }
+    },
+    "/categories": {
+      "get": {
+        "summary": "取得分類列表",
+        "tags": ["categories"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Categories"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/PermissionDeny"
+          }
+        }
+      },
+      "post": {
+        "summary": "新增分類",
+        "tags": ["categories"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/AddCategory"
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/InvalidInput"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/PermissionDeny"
+          }
+        }
+      }
+    },
+    "/categories/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/id"
+        }
+      ],
+      "get": {
+        "summary": "取得分類",
+        "tags": ["categories"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/PermissionDeny"
+          }
+        }
+      },
+      "patch": {
+        "summary": "編輯分類",
+        "tags": ["categories"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UpdateCategory"
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/InvalidInput"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/PermissionDeny"
+          }
+        }
+      },
+      "delete": {
+        "summary": "刪除分類",
+        "tags": ["categories"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "成功"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/PermissionDeny"
+          }
+        }
+      }
+    },
+    "/categories/summaries": {
+      "get": {
+        "summary": "取得分類摘要",
+        "tags": ["categories"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategorySummaries"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/PermissionDeny"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -697,6 +875,89 @@
           {
             "name": "user-update",
             "description": "編輯用戶"
+          }
+        ]
+      },
+      "CategorySummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "編號",
+            "type": "integer"
+          },
+          "name": {
+            "description": "名稱",
+            "type": "string"
+          }
+        },
+        "example": {
+          "id": 1,
+          "name": "服裝"
+        }
+      },
+      "CategorySummaries": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/CategorySummary"
+        },
+        "example": [
+          {
+            "id": 1,
+            "name": "服裝"
+          },
+          {
+            "id": 2,
+            "name": "手機"
+          },
+          {
+            "id": 5,
+            "name": "家電"
+          }
+        ]
+      },
+      "Category": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "編號",
+            "type": "integer"
+          },
+          "name": {
+            "description": "名稱",
+            "type": "string"
+          },
+          "createdTime": {
+            "description": "建立時間",
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "example": {
+          "id": 1,
+          "name": "服裝",
+          "createdTime": "2018-09-29T13:55:30+08:00"
+        }
+      },
+      "Categories": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Category"
+        },
+        "example": [
+          {
+            "id": 1,
+            "name": "服裝",
+            "createdTime": "2018-09-29T13:55:30+08:00"
+          },
+          {
+            "id": 2,
+            "name": "手機",
+            "createdTime": "2018-10-10T03:02:01+08:00"
+          },
+          {
+            "id": 5,
+            "name": "家電",
+            "createdTime": "2018-10-12T01:02:03+08:00"
           }
         ]
       }
@@ -907,6 +1168,41 @@
               "example": {
                 "name": "媽媽",
                 "description": "快點下來吃飯"
+              }
+            }
+          }
+        }
+      },
+      "AddCategory": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "name": {
+                  "description": "名稱",
+                  "type": "string"
+                }
+              },
+              "required": ["name"],
+              "example": {
+                "name": "手機"
+              }
+            }
+          }
+        }
+      },
+      "UpdateCategory": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "name": {
+                  "description": "名稱",
+                  "type": "string"
+                }
+              },
+              "example": {
+                "name": "服裝"
               }
             }
           }

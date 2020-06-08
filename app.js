@@ -13,6 +13,7 @@ const authRouter = require("./routes/auth");
 const usersRouter = require("./routes/users");
 const rolesRouter = require("./routes/roles");
 const permissionsRouter = require("./routes/permissions");
+const categoriesRouter = require("./routes/categories");
 
 const app = express();
 
@@ -51,6 +52,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", authMiddleware, usersRouter);
 app.use("/api/v1/roles", authMiddleware, rolesRouter);
 app.use("/api/v1/permissions", authMiddleware, permissionsRouter);
+app.use("/api/v1/categories", authMiddleware, categoriesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

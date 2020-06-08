@@ -35,4 +35,21 @@ const convertToRoleContent = ({ id, name, description, permissions, createdTime 
   createdTime,
 });
 
-module.exports = { convertToUserContent, convertToRoleSummaryContent, convertToRoleContent };
+const convertToCategoryContent = ({ id, name, createdTime }) => ({
+  id,
+  name,
+  createdTime,
+});
+
+const convertToCategorySummaryContent = ({ id, name }) => ({
+  id,
+  name,
+});
+
+module.exports = {
+  convertToUserContent,
+  convertToRoleSummaryContent,
+  convertToRoleContent,
+  convertToCategorySummaryContent,
+  convertToCategoryContent,
+};
