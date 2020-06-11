@@ -520,9 +520,9 @@
         }
       }
     },
-    "/categories": {
+    "/categories/tree": {
       "get": {
-        "summary": "取得分類列表",
+        "summary": "取得樹狀結構的分類列表",
         "tags": ["categories"],
         "security": [
           {
@@ -535,7 +535,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Categories"
+                  "$ref": "#/components/schemas/CategoryTree"
                 }
               }
             }
@@ -547,7 +547,9 @@
             "$ref": "#/components/responses/PermissionDeny"
           }
         }
-      },
+      }
+    },
+    "/categories": {
       "post": {
         "summary": "新增分類",
         "tags": ["categories"],
@@ -565,7 +567,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Role"
+                  "$ref": "#/components/schemas/Category"
                 }
               }
             }
@@ -664,36 +666,25 @@
             "$ref": "#/components/responses/Unauthorized"
           },
           "403": {
-            "$ref": "#/components/responses/PermissionDeny"
-          }
-        }
-      }
-    },
-    "/categories/summaries": {
-      "get": {
-        "summary": "取得分類摘要",
-        "tags": ["categories"],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功",
+            "description": "禁止",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CategorySummaries"
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "ForbiddenError": {
+                    "value": {
+                      "error_code": "1004",
+                      "error_message": "須先刪除子分類，才能刪除該分類"
+                    }
+                  },
+                  "PermissionDenyError": {
+                    "$ref": "#/components/examples/PermissionDenyError"
+                  }
                 }
               }
             }
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/PermissionDeny"
           }
         }
       }
@@ -944,43 +935,6 @@
           }
         ]
       },
-      "CategorySummary": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "description": "編號",
-            "type": "integer"
-          },
-          "name": {
-            "description": "名稱",
-            "type": "string"
-          }
-        },
-        "example": {
-          "id": 1,
-          "name": "服裝"
-        }
-      },
-      "CategorySummaries": {
-        "type": "array",
-        "items": {
-          "$ref": "#/components/schemas/CategorySummary"
-        },
-        "example": [
-          {
-            "id": 1,
-            "name": "服裝"
-          },
-          {
-            "id": 2,
-            "name": "手機"
-          },
-          {
-            "id": 5,
-            "name": "家電"
-          }
-        ]
-      },
       "Category": {
         "type": "object",
         "properties": {
@@ -991,6 +945,55 @@
           "name": {
             "description": "名稱",
             "type": "string"
+          },
+          "level": {
+            "description": "編號",
+            "type": "integer"
+          },
+          "parentId": {
+            "description": "父分類編號",
+            "type": "integer",
+            "nullable": true
+          },
+          "createdTime": {
+            "description": "建立時間",
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "example": {
+          "id": 1,
+          "name": "服裝",
+          "level": 1,
+          "parentId": null,
+          "createdTime": "2018-09-29T13:55:30+08:00"
+        }
+      },
+      "CategoryTreeItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "編號",
+            "type": "integer"
+          },
+          "name": {
+            "description": "名稱",
+            "type": "string"
+          },
+          "level": {
+            "description": "級別",
+            "type": "integer"
+          },
+          "parentId": {
+            "description": "父分類編號",
+            "type": "integer",
+            "nullable": true
+          },
+          "children": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CategoryTreeItem"
+            }
           },
           "createdTime": {
             "description": "建立時間",
@@ -1004,26 +1007,44 @@
           "createdTime": "2018-09-29T13:55:30+08:00"
         }
       },
-      "Categories": {
+      "CategoryTree": {
         "type": "array",
         "items": {
-          "$ref": "#/components/schemas/Category"
+          "$ref": "#/components/schemas/CategoryTreeItem"
         },
         "example": [
           {
             "id": 1,
             "name": "服裝",
+            "level": 1,
+            "parentId": null,
+            "children": [
+              {
+                "id": 5,
+                "name": "上衣",
+                "level": 2,
+                "parentId": 1,
+                "children": [],
+                "createdTime": "2018-10-12T01:02:03+08:00"
+              },
+              {
+                "id": 7,
+                "name": "洋裝",
+                "level": 2,
+                "parentId": 1,
+                "children": [],
+                "createdTime": "2018-10-12T01:02:04+08:00"
+              }
+            ],
             "createdTime": "2018-09-29T13:55:30+08:00"
           },
           {
             "id": 2,
             "name": "手機",
+            "level": 1,
+            "parentId": null,
+            "children": [],
             "createdTime": "2018-10-10T03:02:01+08:00"
-          },
-          {
-            "id": 5,
-            "name": "家電",
-            "createdTime": "2018-10-12T01:02:03+08:00"
           }
         ]
       }
@@ -1247,11 +1268,17 @@
                 "name": {
                   "description": "名稱",
                   "type": "string"
+                },
+                "parentId": {
+                  "description": "父分類編號",
+                  "type": "integer",
+                  "nullable": true
                 }
               },
               "required": ["name"],
               "example": {
-                "name": "手機"
+                "name": "手機",
+                "parentId": 1
               }
             }
           }
@@ -1314,7 +1341,7 @@
               "$ref": "#/components/schemas/Error"
             },
             "examples": {
-              "InvalidInputError": {
+              "PermissionDenyError": {
                 "$ref": "#/components/examples/PermissionDenyError"
               }
             }
