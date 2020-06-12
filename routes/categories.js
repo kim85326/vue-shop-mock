@@ -114,7 +114,8 @@ router.delete("/:id", async function (req, res, next) {
     res.status(404).send();
   }
 
-  const hasChildren = categoryModel.categories.find((category) => category.parentId === existedCategory.id) !== null;
+  const children = categoryModel.categories.find((category) => category.parentId === existedCategory.id);
+  const hasChildren = children !== undefined;
 
   if (hasChildren) {
     res.status(403).send();
